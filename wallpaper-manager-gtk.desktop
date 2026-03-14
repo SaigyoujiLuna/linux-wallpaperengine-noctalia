@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=壁纸管理器
+Name[en]=Wallpaper Manager
+Comment=GTK GUI for linux-wallpaperengine
+Comment[zh_CN]=基于 linux-wallpaperengine 的 GTK 壁纸管理器
+Exec=python3 /opt/applications/script/wallpaper-manager-gtk/wallpaper-manager-gtk.py
+Icon=preferences-desktop-wallpaper
+Terminal=false
+Type=Application
+Categories=Settings;DesktopSettings;Utility;
+Keywords=wallpaper;壁纸;linux-wallpaperengine;
