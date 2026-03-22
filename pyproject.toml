@@ -1,0 +1,40 @@
+[project]
+name = "wallpaper-manager-gtk"
+version = "0.1.0"
+description = "GTK wallpaper manager for linux-wallpaperengine"
+readme = "README.md"
+requires-python = ">=3.12,<4.0"
+dependencies = [
+    "pygobject>=3.56.1,<4.0.0",
+    "pygobject-stubs>=2.16.0",
+    "python-dotenv>=1.2.2",
+]
+
+[dependency-groups]
+dev = [
+    "mypy>=1.18.2,<2.0.0",
+]
+
+[project.scripts]
+wallpaper-manager-gtk = "wallpaper_manager.cli:main"
+
+[build-system]
+requires = ["hatchling>=1.27.0"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["wallpaper_manager"]
+
+[tool.uv]
+package = true
+
+[tool.mypy]
+python_version = "3.12"
+files = ["wallpaper_manager", "wallpaper-manager-gtk.py"]
+strict = true
+warn_unreachable = true
+pretty = true
+
+[[tool.mypy.overrides]]
+module = ["gi", "gi.repository", "dotenv"]
+ignore_missing_imports = true

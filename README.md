@@ -1,74 +1,84 @@
-# 壁纸管理器 GTK
+# Linux-WallpaperEngine Noctalia shell Adapter
 
-基于 `wallpaper-manager.sh` 逻辑的 GTK3 图形界面壁纸选择器。
-
-## 功能
-
-| 功能 | 说明 |
-|------|------|
-| 配置持久化 | 与 shell 脚本共享同一配置文件 `~/.config/wallpaper-manager/config` |
-| 壁纸列表 | 自动扫描 Workshop 目录，显示缩略图与标题 |
-| 搜索过滤 | 实时按名称/类型搜索壁纸 |
-| 显示器选择 | 通过 `wlr-randr` 自动检测，支持多显示器 |
-| 缩放模式 | fill / fit / stretch / default |
-| 一键应用 | 单击选中后点"应用壁纸"，或双击直接应用 |
-| 启动/停止引擎 | 对应 `--start` 和 `pkill linux-wallpaperengine` |
+基于 `linux-wallpaperengine` + noctalia-shell wallpaper manager
 
 ## 依赖
 
-```
-python3
-python3-gi          (PyGObject)
-gir1.2-gtk-3.0
-linux-wallpaperengine
-wlr-randr           (Wayland 显示器信息)
+系统依赖：
+
+```bash
+# Arch Linux
+sudo pacman -S python-gobject gtk4 libadwaita
+
+# Debian/Ubuntu
+sudo apt install python3-gi python3-gi-cairo gir1.2-gtk-4.0 gir1.2-adw-1
 ```
 
-安装 Python 依赖（Arch Linux）：
+Python 依赖与虚拟环境由 `uv` 管理：
+
 ```bash
-sudo pacman -S python-gobject gtk3
+uv sync
 ```
 
-安装 Python 依赖（Debian/Ubuntu）：
+开发时可额外同步类型检查依赖：
+
 ```bash
-sudo apt install python3-gi python3-gi-cairo gir1.2-gtk-3.0
+uv sync --dev
 ```
 
 ## 运行
 
+推荐直接使用 `uv` 暴露的脚本入口：
+
 ```bash
-python3 wallpaper-manager-gtk.py
+uv run wallpaper-manager-gtk
 ```
 
-或安装桌面快捷方式：
+也可以使用模块入口：
+
+```bash
+uv run python -m wallpaper_manager
+```
+
+旧的顶层脚本仍可用：
+
+```bash
+uv run wallpaper-manager-gtk.py
+```
+
+应用会根据系统 locale 自动选择界面语言；当前内置支持简体中文、English、Japanese。
+
+## 类型检查
+
+项目已配置 `mypy` 严格模式，可使用以下命令检查：
+
+```bash
+uv run mypy
+```
+
+## 启动恢复
+
+登录会话启动时恢复上次壁纸：
+
+```bash
+uv run wallpaper-manager-gtk --startup
+```
+
+
+## 桌面快捷方式
+
+将桌面文件复制到本地应用目录：
+
 ```bash
 cp wallpaper-manager-gtk.desktop ~/.local/share/applications/
 ```
 
-## 界面说明
+## 配置文件
 
-```
-┌─────────────────────────────────────────────────────┐
-│ [搜索壁纸…]          壁纸管理器       [启动引擎]    │
-├─────────────────────────────────────────────────────┤
-│ Steam 目录: [/path/to/steam/…        ] [浏览…][确定]│
-│ 显示器: [DP-1 ▾] [↺]  缩放模式: [fill ▾]           │
-├─────────────────────────────────────────────────────┤
-│ [缩略图] My Wallpaper 1                             │
-│          Scene                                      │
-├─────────────────────────────────────────────────────│
-│ [缩略图] My Wallpaper 2   ← 选中/双击即应用         │
-│          Video                                      │
-├─────────────────────────────────────────────────────┤
-│ 就绪   [刷新列表]            [停止引擎] [应用壁纸]  │
-└─────────────────────────────────────────────────────┘
+运行时配置与 shell 版本兼容，统一保存在：
+
+```text
+~/.config/wallpaper-manager/config
 ```
 
-## 配置文件格式
-
-与 `wallpaper-manager.sh` 完全兼容：
-
-```
-# ~/.config/wallpaper-manager/config
-WE_INSTALL_DIR=/home/user/.local/share/Steam
-```
+由于 `noctalia-shell` 的壁纸服务按“路径变化”触发切换，应用会为每次切换生成新的截图文件路径，确保概览页同步生效。
