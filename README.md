@@ -1,4 +1,4 @@
-# Wallpaper Manager GTK
+# Linux Wallpaper Engine Noctalia-shell Adapter
 
 A GTK4 + libadwaita graphical interface for `linux-wallpaperengine`, integrated with `noctalia-shell` for automatic color extraction and system theme updates.
 
