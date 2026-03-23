@@ -27,8 +27,8 @@ sudo apt install python3-gi python3-gi-cairo gir1.2-gtk-4.0 gir1.2-adw-1 wlr-ran
 ```
 
 ### Engines and Integrations
-- [linux-wallpaperengine](https://github.com/Al some-projects/linux-wallpaperengine): Core engine to play wallpapers.
-- [noctalia-shell](https://github.com/Noctalia/noctalia-shell): (Optional) For Monet color extraction and theme updates.
+- [linux-wallpaperengine](https://github.com/Almamu/linux-wallpaperengine): Core engine to play wallpapers.
+- [noctalia-shell](https://github.com/noctalia-dev/noctalia-shell): For Monet color extraction and theme updates.
 - [wlr-randr](https://github.com/emersion/wlr-randr): For monitor information detection.
 
 ## Installation
